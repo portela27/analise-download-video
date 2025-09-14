@@ -2,6 +2,8 @@ from pytubefix import YouTube
 from moviepy import AudioFileClip
 #import speech_recognition as sr
 import os
+import whisper 
+
 
 def download(url):
     #puxando a URL fornecida e fazendo o download do video completo e do audio em formato MP4 separado 
@@ -17,12 +19,19 @@ def download(url):
     audioclip.write_audiofile(conversor_audio)
     audioclip.close()
     os.remove(audio)
+
+    return conversor_audio
     
+def trascrever_audio():
+    modelo = whisper.load_model("small")
+    transcricao = modelo.transcribe()
+    print(transcricao["text"]) 
+
+    with open("transcrição.txt","w", encoding="utf-8") as f :
+        f.white(transcricao["text"])
 
 
-    
-    
-    
 
-    
-download('https://www.youtube.com/watch?v=oPlXecD-gZM&list=PLxI8Can9yAHeHQr2McJ01e-ANyh3K0Lfq&index=2')
+
+caminho_audio = download('https://www.youtube.com/watch?v=C1yHhp9-8s4')
+trascrever_audio(caminho_audio)
