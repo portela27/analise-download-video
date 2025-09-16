@@ -22,13 +22,15 @@ def download(url):
 
     return conversor_audio
     
-def trascrever_audio():
+def trascrever_audio(audio_path):
     modelo = whisper.load_model("small")
-    transcricao = modelo.transcribe()
+    transcricao = modelo.transcribe(audio_path)
     print(transcricao["text"]) 
 
-    with open("transcrição.txt","w", encoding="utf-8") as f :
-        f.white(transcricao["text"])
+    with open("transcrição.txt", "w", encoding="utf-8") as f:
+        f.write(transcricao["text"])  
+    
+    print("Transcrição salva em 'transcrição.txt'")
 
 
 
